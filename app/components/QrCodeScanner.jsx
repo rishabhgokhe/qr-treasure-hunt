@@ -37,36 +37,39 @@ const QRCodeScanner = () => {
 
   return (
     <div style={styles.container}>
-      <button onClick={() => setPause(!pause)} style={{ marginBottom: 10 }}>
-        {pause ? 'Resume Scanner' : 'Pause Scanner'}
-      </button>
+      <button
+          onClick={() => setPause(!pause)}
+          className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 transition rounded-lg font-medium"
+        >
+          {pause ? "▶️ Resume Scanner" : "⏸️ Pause Scanner"}
+        </button>
 
       <div style={styles.controls}>
-        <select onChange={(e) => setDeviceId(e.target.value)}>
+        {/* <select onChange={(e) => setDeviceId(e.target.value)}>
           <option value={undefined}>Select Camera</option>
           {devices.map((device, i) => (
             <option key={i} value={device.deviceId}>
               {device.label || `Camera ${i + 1}`}
             </option>
           ))}
-        </select>
+        </select> */}
 
-        <select onChange={(e) => setTracker(e.target.value)}>
+        {/* <select onChange={(e) => setTracker(e.target.value)}>
           <option value="centerText">Center Text</option>
           <option value="outline">Outline</option>
           <option value="boundingBox">Bounding Box</option>
           <option value="">No Tracker</option>
-        </select>
+        </select> */}
       </div>
 
       <Scanner
-        formats={['qr_code']} // Only scan QR codes
+        formats={['qr_code']}
         constraints={{ deviceId }}
         paused={pause}
         scanDelay={1000}
         onScan={(codes) => {
           console.log('QR Code Detected:', codes);
-          alert(`QR Code: ${codes.map((c) => c.rawValue).join(', ')}`);
+          // alert(`QR Code: ${codes.map((c) => c.rawValue).join(', ')}`);
         }}
         onError={(err) => console.error('Scanner error:', err)}
         components={{
