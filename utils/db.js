@@ -7,8 +7,6 @@ if (!MONGODB_URI) {
   throw new Error("Please define MONGODB_URI in .env.local");
 }
 
-// Ensure the URI has the database name
-// e.g., mongodb+srv://user:pass@cluster.mongodb.net/Treasure-Hunt
 if (!MONGODB_URI.includes("Treasure-Hunt")) {
   throw new Error("Your MongoDB URI must include the database name 'Treasure-Hunt'");
 }
