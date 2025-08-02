@@ -32,11 +32,12 @@ const QRCodeScanner = () => {
 
   const showMessage = (msg) => {
     setMessage(msg);
-    clearTimeout(messageTimer);
-    const timer = setTimeout(() => {
-      setMessage("📷 Scan a QR Code");
-    }, 5000);
-    setMessageTimer(timer);
+    // Optionally, reset after a few seconds
+    // clearTimeout(messageTimer);
+    // const timer = setTimeout(() => {
+    //   setMessage("📷 Scan a QR Code");
+    // }, 5000);
+    // setMessageTimer(timer);
   };
 
   const handleScan = (codes) => {
@@ -45,17 +46,17 @@ const QRCodeScanner = () => {
 
     try {
       const params = new URLSearchParams(new URL(url).search);
-      const team = params.get("team");
+      const teamId = params.get("teamId");
       const qrId = params.get("qrId");
 
-      if (team || qrId) {
-        showMessage(`✅ Scanned: ${team} - ${qrId}`)
+      if (teamId || qrId) {
+        showMessage(`✅ Scanned: ${teamId} - ${qrId}`);
       }
 
       fetch("/api/validate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ team, qrId }),
+        body: JSON.stringify({ teamId, qrId }),
       })
         .then((res) => res.json())
         .then((data) => {
@@ -69,19 +70,6 @@ const QRCodeScanner = () => {
     }
   };
 
-  // const getTracker = () => {
-  //   switch (tracker) {
-  //     case "outline":
-  //       return outline;
-  //     case "boundingBox":
-  //       return boundingBox;
-  //     case "centerText":
-  //       return centerText;
-  //     default:
-  //       return undefined;
-  //   }
-  // };
-
   return (
     <div style={styles.container}>
       <button
@@ -92,6 +80,7 @@ const QRCodeScanner = () => {
       </button>
 
       <div style={styles.controls}>
+        {/* Optional: Camera selection */}
         {/* <select onChange={(e) => setDeviceId(e.target.value)}>
           <option value={undefined}>Select Camera</option>
           {devices.map((device, i) => (
@@ -99,13 +88,6 @@ const QRCodeScanner = () => {
               {device.label || `Camera ${i + 1}`}
             </option>
           ))}
-        </select> */}
-
-        {/* <select onChange={(e) => setTracker(e.target.value)}>
-          <option value="centerText">Center Text</option>
-          <option value="outline">Outline</option>
-          <option value="boundingBox">Bounding Box</option>
-          <option value="">No Tracker</option>
         </select> */}
       </div>
 
